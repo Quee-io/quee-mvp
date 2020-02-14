@@ -1,6 +1,7 @@
 package io.quee.mvp.ui.activity
 
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import io.quee.mvp.base.MvpQueeStructure
@@ -24,7 +25,8 @@ abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M :
         afterMvpInit(bundle)
     }
 
-    final override fun onResume() {
+    @CallSuper
+    override fun onResume() {
         super.onResume()
         initData()
     }

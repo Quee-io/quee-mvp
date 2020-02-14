@@ -40,32 +40,34 @@ android {
 dependencies {
     def activity_version = "1.1.0"
     def fragment_version = "1.2.1"
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    api(fileTree(dir: 'libs', include: ['*.jar']))
     kapt "com.android.databinding:compiler:$gradle_version"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    api 'androidx.multidex:multidex:2.0.1'
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.core:core-ktx:1.2.0'
-    api 'com.google.android.material:material:1.2.0-alpha04'
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    api('androidx.multidex:multidex:2.0.1')
+    api('androidx.appcompat:appcompat:1.1.0')
+    api('androidx.core:core-ktx:1.2.0')
+    api('com.google.android.material:material:1.2.0-alpha04')
 
-    api "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    api "com.squareup.retrofit2:converter-jackson:$rootProject.retrofitVersion"
-    api "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
-    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttploggingVersion"
-    api "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
-    api "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1"
+    api("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion")
+    api("com.squareup.retrofit2:converter-jackson:$rootProject.retrofitVersion")
+    api("com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion")
+    api("com.squareup.okhttp3:logging-interceptor:$rootProject.okhttploggingVersion")
+    api("com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion")
+    api("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
 
-    api "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
-    api "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-    api "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlinVersion"
+    api("io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion")
+    api("io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion")
+    api("io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlinVersion")
 
-    api "androidx.activity:activity-ktx:$activity_version"
-    api "androidx.fragment:fragment-ktx:$fragment_version"
-    api 'android.arch.lifecycle:extensions:1.1.1'
+    api("androidx.activity:activity-ktx:$activity_version")
+    api("androidx.fragment:fragment-ktx:$fragment_version")
+    api('android.arch.lifecycle:extensions:1.1.1')
 
-    api 'io.quee.fragmentation:fragmentation:1.0.0.1'
-    api 'io.quee.fragmentation:fragmentation-core:1.0.0.1'
-    api 'io.quee.fragmentation:fragmentation-swipeback:1.0.0.1'
+    api('io.quee.fragmentation:fragmentation:1.0.0.2')
+    api('io.quee.fragmentation:fragmentation-core:1.0.0.2')
+    api('io.quee.fragmentation:fragmentation-swipeback:1.0.0.2')
+
+    api('com.treebo:internetavailabilitychecker:1.0.4')
 }
 
 install {
