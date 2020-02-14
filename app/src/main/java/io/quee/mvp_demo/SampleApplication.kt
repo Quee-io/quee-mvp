@@ -7,12 +7,12 @@ import io.quee.mvp.QueeApplication
  * Licensed for Quee.io
  */
 
-class SampleApplication : QueeApplication("https://my-json-server.typicode.com") {
+class SampleApplication : QueeApplication() {
     override fun certificateRaw(): Int {
         return 0
     }
 
-    override fun httpsEnabled(): Boolean {
-        return false
+    override fun serverUrl(): String {
+        return "https://my-json-server.typicode.com"
     }
 }

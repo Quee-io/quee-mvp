@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.RawRes
 import androidx.multidex.MultiDexApplication
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
-abstract class QueeApplication(val serverUrl: String?) : MultiDexApplication() {
+abstract class QueeApplication() : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -14,7 +17,18 @@ abstract class QueeApplication(val serverUrl: String?) : MultiDexApplication() {
     @RawRes
     abstract fun certificateRaw(): Int
 
-    abstract fun httpsEnabled(): Boolean
+    abstract fun serverUrl(): String
+
+    open fun createHttpClient(): OkHttpClient {
+        val interceptor =
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .build()
+    }
 
     companion object {
         @get:Synchronized
