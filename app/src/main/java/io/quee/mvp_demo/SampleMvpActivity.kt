@@ -4,7 +4,6 @@ import android.os.Bundle
 import io.quee.mvp.ui.activity.QueeMvpActivity
 import io.quee.mvp_demo.databinding.ActivitySampleBinding
 import io.quee.mvp_demo.func.MessageListener
-import io.quee.mvp_demo.notifier.SampleNotifier
 import io.quee.mvp_demo.sample.contract.SampleContract
 import io.quee.mvp_demo.sample.model.SampleModel
 import io.quee.mvp_demo.sample.presenter.SamplePresenter
@@ -20,7 +19,7 @@ class SampleMvpActivity :
     }
 
     override fun createView(): SampleContract.SampleView {
-        return SampleView(this, this, SampleNotifier(this))
+        return SampleView(this)
     }
 
     override fun createModel(): SampleContract.SampleModel {

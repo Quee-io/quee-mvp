@@ -1,10 +1,8 @@
 package io.quee.mvp_demo.sample.contract
 
-import androidx.activity.ComponentActivity
 import io.quee.mvp.common.QueeModel
 import io.quee.mvp.common.QueePresenter
 import io.quee.mvp.common.QueeView
-import io.quee.mvp.common.QueeViewNotifier
 import io.quee.mvp_demo.data.SampleData
 import io.reactivex.Observable
 
@@ -14,12 +12,8 @@ import io.reactivex.Observable
  */
 
 interface SampleContract {
-    abstract class SampleView(
-        appContext: ComponentActivity,
-        queeViewNotifier: QueeViewNotifier
-    ) :
-        QueeView(appContext, queeViewNotifier) {
-        abstract fun onItemLoaded(items: Array<SampleData>)
+    interface SampleView : QueeView {
+        fun onItemLoaded(items: Array<SampleData>)
     }
 
     interface SampleModel : QueeModel {

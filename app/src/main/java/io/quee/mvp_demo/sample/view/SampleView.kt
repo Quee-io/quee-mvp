@@ -1,9 +1,6 @@
 package io.quee.mvp_demo.sample.view
 
-import android.util.Log.d
-import androidx.activity.ComponentActivity
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.quee.mvp.common.QueeViewNotifier
 import io.quee.mvp_demo.data.SampleData
 import io.quee.mvp_demo.func.MessageListener
 import io.quee.mvp_demo.sample.contract.SampleContract
@@ -14,13 +11,22 @@ import io.quee.mvp_demo.sample.contract.SampleContract
  */
 
 class SampleView(
-    appContext: ComponentActivity,
-    val messageListener: MessageListener,
-    queeViewNotifier: QueeViewNotifier
-) : SampleContract.SampleView(appContext, queeViewNotifier) {
+    val messageListener: MessageListener
+) : SampleContract.SampleView {
+    override fun showLoading() {
+        messageListener.onMesssage("start loading")
+    }
+
+    override fun hideLoading() {
+        messageListener.onMesssage("hide loading")
+    }
 
     override fun onItemLoaded(items: Array<SampleData>) {
-        d(javaClass.canonicalName, ObjectMapper().writeValueAsString(items))
-        messageListener.onMesssage(ObjectMapper().writeValueAsString(items))
+        val value = ObjectMapper().writeValueAsString(items)
+        messageListener.onMesssage(value)
+    }
+
+    override fun onError(throwable: Throwable) {
+        messageListener.onMesssage("error ${throwable.message}")
     }
 }
