@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/quee/mvp-architecture/mvp/images/download.svg?version=1.0.0.0) ](https://bintray.com/quee/mvp-architecture/mvp/1.0.0.0/link) 
+[ ![Download](https://api.bintray.com/packages/quee/mvp-architecture/mvp/images/download.svg?version=1.0.0.4) ](https://bintray.com/quee/mvp-architecture/mvp/1.0.0.4/link) 
 # Quee MVP Archeticture.
 To use this version:
 - Add this to `build.gradle` file
