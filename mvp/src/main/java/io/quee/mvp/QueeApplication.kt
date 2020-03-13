@@ -2,16 +2,20 @@ package io.quee.mvp
 
 import android.content.Context
 import android.content.res.Resources
+import androidx.annotation.CallSuper
 import androidx.annotation.RawRes
 import androidx.multidex.MultiDexApplication
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 abstract class QueeApplication() : MultiDexApplication() {
+    @CallSuper
     override fun onCreate() {
         super.onCreate()
         instance = this
+        InternetAvailabilityChecker.init(this)
     }
 
     @RawRes

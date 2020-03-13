@@ -8,8 +8,8 @@ import io.quee.mvp.common.QueePresenter
 import io.quee.mvp.common.QueeView
 
 abstract class QueeMvpFragment<B : ViewDataBinding, P : QueePresenter<M, V>, M : QueeModel, V : QueeView>
-    (layout: Int) :
-    QueeFragment<B>(layout), MvpQueeStructure<P, M, V> {
+    (layout: Int, isSecure: Boolean = false) :
+    QueeFragment<B>(layout, isSecure), MvpQueeStructure<P, M, V> {
 
     lateinit var model: M
     lateinit var view: V
@@ -26,6 +26,10 @@ abstract class QueeMvpFragment<B : ViewDataBinding, P : QueePresenter<M, V>, M :
     final override fun onResume() {
         super.onResume()
         initData()
+        internalOnResume()
+    }
+
+    open fun internalOnResume() {
     }
 
     abstract fun initData()

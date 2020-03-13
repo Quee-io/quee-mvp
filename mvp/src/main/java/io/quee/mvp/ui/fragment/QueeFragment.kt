@@ -1,6 +1,7 @@
 package io.quee.mvp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,18 @@ import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener
 import io.quee.fragmentation.CoreFragment
 import io.quee.mvp.base.QueeStructure
 
-abstract class QueeFragment<B : ViewDataBinding>(@param:LayoutRes open val layout: Int, val isSecure: Boolean = false) :
+abstract class QueeFragment<B : ViewDataBinding>(
+    @param:LayoutRes open val layout: Int,
+    private val isSecure: Boolean = false
+) :
     CoreFragment(),
-    QueeStructure {
+    QueeStructure,
+    InternetConnectivityListener {
 
     lateinit var binding: B
 
@@ -34,6 +41,18 @@ abstract class QueeFragment<B : ViewDataBinding>(@param:LayoutRes open val layou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        InternetAvailabilityChecker.getInstance().addInternetConnectivityListener(this)
         afterBindingLayout(savedInstanceState)
+    }
+
+    final override fun onInternetConnectivityChanged(isConnected: Boolean) {
+        onNetworkConnectionChanged(isConnected = isConnected)
+    }
+
+    protected open fun onNetworkConnectionChanged(isConnected: Boolean) {
+        Log.d(
+            javaClass.canonicalName,
+            "onNetworkConnectionChanged: is Connected --> $isConnected"
+        )
     }
 }

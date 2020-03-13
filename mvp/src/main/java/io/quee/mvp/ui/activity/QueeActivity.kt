@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -21,7 +22,10 @@ import io.quee.mvp.manager.AppManager
 import io.quee.mvp.utils.LocalManager
 
 
-abstract class QueeActivity<B : ViewDataBinding>(@param:LayoutRes open val layout: Int) :
+abstract class QueeActivity<B : ViewDataBinding>(
+    @param:LayoutRes open val layout: Int,
+    private val isSecure: Boolean = false
+) :
     SwipeBackActivity(), QueeStructure, InternetConnectivityListener {
 
     lateinit var binding: B
@@ -33,8 +37,14 @@ abstract class QueeActivity<B : ViewDataBinding>(@param:LayoutRes open val layou
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isSecure) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE
+            )
+        }
         binding = DataBindingUtil.setContentView(this, layout)
-        InternetAvailabilityChecker.init(this)
+        InternetAvailabilityChecker.getInstance().addInternetConnectivityListener(this)
         afterBindingLayout(savedInstanceState)
         AppManager.appManager.addActivity(this)
     }
@@ -46,7 +56,7 @@ abstract class QueeActivity<B : ViewDataBinding>(@param:LayoutRes open val layou
     protected open fun onNetworkConnectionChanged(isConnected: Boolean) {
         Log.d(
             javaClass.canonicalName,
-            "onReceive: is Connected --> $isConnected"
+            "onNetworkConnectionChanged: is Connected --> $isConnected"
         )
     }
 

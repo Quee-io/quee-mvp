@@ -7,7 +7,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 apply plugin: 'com.github.dcendents.android-maven'
 
-version = '1.0.0.1'
+version = '1.0.0.4'
 group = 'io.quee.mvp'
 android {
     compileSdkVersion 29
@@ -39,21 +39,21 @@ android {
 
 dependencies {
     def activity_version = "1.1.0"
-    def fragment_version = "1.2.1"
+    def fragment_version = '1.2.2'
     api(fileTree(dir: 'libs', include: ['*.jar']))
     kapt "com.android.databinding:compiler:$gradle_version"
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     api('androidx.multidex:multidex:2.0.1')
     api('androidx.appcompat:appcompat:1.1.0')
     api('androidx.core:core-ktx:1.2.0')
-    api('com.google.android.material:material:1.2.0-alpha04')
+    api('com.google.android.material:material:1.2.0-alpha05')
 
     api("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion")
     api("com.squareup.retrofit2:converter-jackson:$rootProject.retrofitVersion")
     api("com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion")
     api("com.squareup.okhttp3:logging-interceptor:$rootProject.okhttploggingVersion")
     api("com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion")
-    api("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
+    api('com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2')
 
     api("io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion")
     api("io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion")
@@ -81,7 +81,7 @@ install {
             packaging 'aar'
             groupId 'io.quee.mvp'
             artifactId 'mvp'
-            version '1.0.0.1'
+            version '1.0.0.4'
 
             licenses {
                 license {
@@ -115,9 +115,9 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/Quee-io/quee-mvp.git'
         version {
-            name = '1.0.0.1'
+            name = '1.0.0.4'
             desc = 'Android MVP architecture library'
-            vcsTag = '1.0.0.1'
+            vcsTag = '1.0.0.4'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }
