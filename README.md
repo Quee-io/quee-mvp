@@ -11,5 +11,5 @@ repositories {
 ```
 - then add this dependency in your project.
 ```
-implementation 'io.quee.mvp:mvp:1.0.0.0'
+implementation 'io.quee.mvp:mvp:1.0.0.4'
 ```
