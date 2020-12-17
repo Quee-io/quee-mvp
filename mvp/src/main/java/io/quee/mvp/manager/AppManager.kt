@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import java.util.*
+import kotlin.system.exitProcess
 
 class AppManager private constructor() {
     init {
@@ -12,7 +13,7 @@ class AppManager private constructor() {
     }
 
     fun addActivity(activity: Activity?) {
-        activityStack!!.add(activity)
+        activityStack.add(activity)
     }
 
     fun currentActivity(): Activity? {
@@ -48,13 +49,13 @@ class AppManager private constructor() {
     }
 
     @SuppressLint("MissingPermission")
-    fun AppExit(context: Context) {
+    fun appExit(context: Context) {
         try {
             finishAllActivity()
             val activityMgr =
                 context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             activityMgr.killBackgroundProcesses(context.packageName)
-            System.exit(0)
+            exitProcess(0)
         } catch (e: Exception) {
         }
     }
