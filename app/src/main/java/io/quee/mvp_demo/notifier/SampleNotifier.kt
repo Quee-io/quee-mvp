@@ -12,16 +12,16 @@ import io.quee.mvp_demo.func.MessageListener
 class SampleNotifier(private val messageListener: MessageListener) : DefQueeViewNotifier() {
     override fun showError(componentActivity: ComponentActivity, throwable: Throwable) {
         super.showError(componentActivity, throwable)
-        messageListener.onMesssage("error ${throwable.message}")
+        messageListener.onMessage("error ${throwable.message}")
     }
 
     override fun startLoading(componentActivity: ComponentActivity) {
         super.startLoading(componentActivity)
-        messageListener.onMesssage("start loading")
+        messageListener.onMessage("start loading")
     }
 
     override fun hideLoading(componentActivity: ComponentActivity) {
         super.hideLoading(componentActivity)
-        messageListener.onMesssage("hide loading")
+        messageListener.onMessage("hide loading")
     }
 }

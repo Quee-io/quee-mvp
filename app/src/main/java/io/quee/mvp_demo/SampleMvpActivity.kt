@@ -15,7 +15,7 @@ class SampleMvpActivity :
     ), MessageListener {
 
     override fun initData() {
-        presenter.sampleData()
+        executeInPresenter { sampleData() }
     }
 
     override fun createView(): SampleContract.SampleView {
@@ -33,7 +33,7 @@ class SampleMvpActivity :
     override fun afterMvpInit(bundle: Bundle?) {
     }
 
-    override fun onMesssage(value: String) {
+    override fun onMessage(value: String) {
         binding.textView.text = "${binding.textView.text} \n\n $value"
     }
 }

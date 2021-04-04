@@ -11,31 +11,27 @@ abstract class QueeMvpFragment<B : ViewDataBinding, P : QueePresenter<M, V>, M :
     (layout: Int, isSecure: Boolean = false) :
     QueeFragment<B>(layout, isSecure), MvpQueeStructure<P, M, V> {
 
-    lateinit var model: M
-    lateinit var view: V
-    lateinit var presenter: P
+    private var model: M? = null
+    private var view: V? = null
+    private var presenter: P? = null
 
     final override fun afterBindingLayout(bundle: Bundle?) {
         model = createModel()
         view = createView()
         presenter = createPresenter()
-        presenter.attach(view, model)
+        presenter?.attach(this.view!!, model!!)
         afterMvpInit(bundle)
-    }
-
-    final override fun onResume() {
-        super.onResume()
         initData()
-        internalOnResume()
     }
 
-    open fun internalOnResume() {
+    protected fun executeInPresenter(command: P.() -> Unit) {
+        presenter?.command()
     }
 
     abstract fun initData()
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.detach()
+        presenter?.detach()
     }
 }

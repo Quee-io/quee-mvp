@@ -7,18 +7,18 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.2'
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "io.quee.mvp_demo"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
     }
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding true
     }
     buildTypes {
         release {

@@ -14,19 +14,19 @@ class SampleView(
     val messageListener: MessageListener
 ) : SampleContract.SampleView {
     override fun showLoading() {
-        messageListener.onMesssage("start loading")
+        messageListener.onMessage("start loading")
     }
 
     override fun hideLoading() {
-        messageListener.onMesssage("hide loading")
+        messageListener.onMessage("hide loading")
     }
 
     override fun onItemLoaded(items: Array<SampleData>) {
         val value = ObjectMapper().writeValueAsString(items)
-        messageListener.onMesssage(value)
+        messageListener.onMessage(value)
     }
 
     override fun onError(throwable: Throwable) {
-        messageListener.onMesssage("error ${throwable.message}")
+        messageListener.onMessage("error ${throwable.message}")
     }
 }

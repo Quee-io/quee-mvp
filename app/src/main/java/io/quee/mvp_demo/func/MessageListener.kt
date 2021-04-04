@@ -6,5 +6,5 @@ package io.quee.mvp_demo.func
  */
 
 interface MessageListener {
-    fun onMesssage(value: String)
+    fun onMessage(value: String)
 }
