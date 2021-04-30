@@ -1,6 +1,7 @@
 package io.quee.mvp.ui.sheet
 
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import io.quee.mvp.base.MvpQueeStructure
 import io.quee.mvp.common.QueeModel
@@ -30,8 +31,9 @@ abstract class QueeMvpBottomSheetFragment<B : ViewDataBinding, P : QueePresenter
 
     abstract fun initData()
 
-    override fun onDestroy() {
-        super.onDestroy()
+    @CallSuper
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter?.detach()
     }
 }

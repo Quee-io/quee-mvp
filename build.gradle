@@ -57,7 +57,7 @@ ext {
     okhttploggingVersion = '4.9.1'
     okhttpVersion = '4.9.1'
 
-    rxjavaVersion = '2.2.17'
+    rxjavaVersion = '2.2.21'
     rxandroidVersion = '2.1.1'
     rxkotlinVersion = '2.4.0'
     rxbindingVersion = '2.2.0'

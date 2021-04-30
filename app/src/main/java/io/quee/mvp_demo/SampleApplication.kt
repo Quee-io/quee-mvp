@@ -15,11 +15,5 @@ class SampleApplication : QueeApplication() {
         SharedPreferencesHelper.init(SecurePreferences(this))
     }
 
-    override fun certificateRaw(): Int {
-        return 0
-    }
-
-    override fun serverUrl(): String {
-        return "https://my-json-server.typicode.com"
-    }
+    override val serverUrl: String = "https://my-json-server.typicode.com"
 }

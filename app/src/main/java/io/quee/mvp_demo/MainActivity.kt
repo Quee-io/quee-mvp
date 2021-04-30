@@ -8,8 +8,10 @@ import io.quee.mvp_demo.databinding.ActivityMainBinding
 class MainActivity : QueeActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun afterBindingLayout(bundle: Bundle?) {
-        binding.loadSampleData.setOnClickListener {
-            startActivity(Intent(this, SampleMvpActivity::class.java))
+        executeInBinding {
+            loadSampleData.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SampleMvpActivity::class.java))
+            }
         }
     }
 }

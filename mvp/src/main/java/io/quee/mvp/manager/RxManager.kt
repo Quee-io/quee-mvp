@@ -1,12 +1,11 @@
 package io.quee.mvp.manager
 
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import java.util.*
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 class RxManager {
-    private val mRxBus: RxBus? = RxBus.`$`()
+    private val mRxBus: RxBus = RxBus.instance()
     private val mObservables: MutableMap<String, Observable<*>?> = HashMap()
     private val mCompositeSubscription = CompositeDisposable()
 
@@ -16,6 +15,10 @@ class RxManager {
 
     fun clear() {
         mCompositeSubscription.clear()
-        for ((key, value) in mObservables) mRxBus!!.unregister(key, value!!)
+        mObservables.forEach {
+            it.value?.apply {
+                mRxBus.unregister(it.key, this)
+            }
+        }
     }
 }

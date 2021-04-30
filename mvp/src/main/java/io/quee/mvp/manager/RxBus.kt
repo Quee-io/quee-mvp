@@ -1,8 +1,8 @@
 package io.quee.mvp.manager
 
 import android.util.Log.d
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.Subject
 import java.util.concurrent.ConcurrentHashMap
 
 class RxBus private constructor() {
@@ -11,7 +11,7 @@ class RxBus private constructor() {
     fun unregister(
         tag: Any,
         observable: Observable<*>
-    ): RxBus? {
+    ): RxBus {
         val subjects: MutableList<Subject<*>>? = subjectMapper[tag]
         if (null != subjects) {
             subjects.remove(observable)
@@ -20,17 +20,18 @@ class RxBus private constructor() {
                 d("unregister", tag.toString() + "  size:" + subjects.size)
             }
         }
-        return `$`()
+        return instance()
     }
 
     companion object {
         private var instance: RxBus? = null
+
         @Synchronized
-        fun `$`(): RxBus? {
+        fun instance(): RxBus {
             if (null == instance) {
                 instance = RxBus()
             }
-            return instance
+            return instance!!
         }
 
         private fun isEmpty(collection: Collection<Subject<*>>?): Boolean {

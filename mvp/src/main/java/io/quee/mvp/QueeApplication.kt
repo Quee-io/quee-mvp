@@ -5,44 +5,39 @@ import android.content.res.Resources
 import androidx.annotation.CallSuper
 import androidx.annotation.RawRes
 import androidx.multidex.MultiDexApplication
-import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
+import io.quee.mvp.http.HttpClientProvider
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
-abstract class QueeApplication() : MultiDexApplication() {
+abstract class QueeApplication() : MultiDexApplication(), HttpClientProvider {
     @CallSuper
     override fun onCreate() {
         super.onCreate()
         instance = this
-        InternetAvailabilityChecker.init(this)
     }
 
     @RawRes
-    abstract fun certificateRaw(): Int
+    open fun certificateRaw(): Int? = null
 
-    abstract fun serverUrl(): String
+    abstract val serverUrl: String
 
-    open fun createHttpClient(): OkHttpClient {
-        val interceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(1, TimeUnit.MINUTES)
-            .writeTimeout(1, TimeUnit.MINUTES)
-            .build()
-    }
+    override val httpClient: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
 
     companion object {
         @get:Synchronized
-        var instance: QueeApplication? = null
+        lateinit var instance: QueeApplication
             private set
 
         val appContext: Context
-            get() = instance!!.applicationContext
+            get() = instance.applicationContext
 
         val appResources: Resources
-            get() = instance!!.resources
+            get() = instance.resources
     }
 }
