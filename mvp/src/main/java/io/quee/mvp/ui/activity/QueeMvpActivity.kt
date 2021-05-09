@@ -33,7 +33,19 @@ abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M :
 
     @CallSuper
     override fun onDestroy() {
+        presenter?.detach()
         super.onDestroy()
+    }
+
+    @CallSuper
+    override fun onPause() {
+        super.onPause()
+        presenter?.detach()
+    }
+
+    @CallSuper
+    override fun onStop() {
+        super.onStop()
         presenter?.detach()
     }
 }

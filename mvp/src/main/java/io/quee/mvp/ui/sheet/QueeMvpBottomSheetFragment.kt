@@ -32,8 +32,26 @@ abstract class QueeMvpBottomSheetFragment<B : ViewDataBinding, P : QueePresenter
     abstract fun initData()
 
     @CallSuper
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
         presenter?.detach()
+        super.onDestroy()
+    }
+
+    @CallSuper
+    override fun onPause() {
+        super.onPause()
+        presenter?.detach()
+    }
+
+    @CallSuper
+    override fun onStop() {
+        super.onStop()
+        presenter?.detach()
+    }
+
+    @CallSuper
+    override fun onDestroyView() {
+        presenter?.detach()
+        super.onDestroyView()
     }
 }
