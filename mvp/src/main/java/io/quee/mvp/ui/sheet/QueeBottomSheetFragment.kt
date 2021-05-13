@@ -15,7 +15,14 @@ abstract class QueeBottomSheetFragment<B : ViewDataBinding>(@param:LayoutRes ope
     BottomSheetDialogFragment(),
     QueeStructure {
 
-    var binding: B? = null
+    private var _binding: B? = null
+
+    val binding: B
+        get() = _binding!!
+
+    protected fun executeInBinding(command: B.() -> Unit) {
+        _binding?.command()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,7 +30,7 @@ abstract class QueeBottomSheetFragment<B : ViewDataBinding>(@param:LayoutRes ope
         savedInstanceState: Bundle?
     ): View? {
         val dataBinding: B = DataBindingUtil.inflate(inflater, layout, container, false)
-        binding = dataBinding
+        _binding = dataBinding
         return dataBinding.root
     }
 
@@ -34,7 +41,7 @@ abstract class QueeBottomSheetFragment<B : ViewDataBinding>(@param:LayoutRes ope
 
     @CallSuper
     override fun onDestroyView() {
+        _binding = null
         super.onDestroyView()
-        binding = null
     }
 }

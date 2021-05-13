@@ -9,16 +9,23 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
+import io.quee.fragmentation.CoreFragment
 import io.quee.mvp.base.QueeStructure
 
 abstract class QueeFragment<B : ViewDataBinding>(
     @param:LayoutRes open val layout: Int,
     private val isSecure: Boolean = false
-) : Fragment(),
+) : CoreFragment(),
     QueeStructure {
 
-    var binding: B? = null
+    private var _binding: B? = null
+
+    val binding: B
+        get() = _binding!!
+
+    protected fun executeInBinding(command: B.() -> Unit) {
+        _binding?.command()
+    }
 
     final override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +39,7 @@ abstract class QueeFragment<B : ViewDataBinding>(
             )
         }
         val dataBinding: B = DataBindingUtil.inflate(inflater, layout, container, false)
-        binding = dataBinding
+        _binding = dataBinding
         return dataBinding.root
     }
 
@@ -44,6 +51,6 @@ abstract class QueeFragment<B : ViewDataBinding>(
     @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }
