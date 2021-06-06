@@ -17,10 +17,9 @@ abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M :
     private var presenter: P? = null
 
     final override fun afterBindingLayout(bundle: Bundle?) {
-        model = this.createModel()
-        view = this.createView()
-        presenter = this.createPresenter()
-        presenter?.attach(view!!, model!!)
+        presenter = this.createPresenter().apply {
+            attach(createView(), createModel(), lifecycle)
+        }
         afterMvpInit(bundle)
         initData()
     }
@@ -30,6 +29,12 @@ abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M :
     }
 
     abstract fun initData()
+
+    @CallSuper
+    override fun onResume() {
+        super.onResume()
+        presenter?.apply { attach(createView(), createModel()) }
+    }
 
     @CallSuper
     override fun onDestroy() {

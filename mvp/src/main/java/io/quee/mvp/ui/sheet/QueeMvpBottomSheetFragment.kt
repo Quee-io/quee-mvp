@@ -12,24 +12,27 @@ abstract class QueeMvpBottomSheetFragment<B : ViewDataBinding, P : QueePresenter
     (layout: Int) :
     QueeBottomSheetFragment<B>(layout), MvpQueeStructure<P, M, V> {
 
-    private var model: M? = null
-    private var view: V? = null
     private var presenter: P? = null
 
     final override fun afterBindingLayout(bundle: Bundle?) {
-        model = createModel()
-        view = createView()
-        presenter = createPresenter()
-        presenter?.attach(this.view!!, model!!)
+        presenter = createPresenter().apply {
+            attach(createView(), createModel())
+        }
         afterMvpInit(bundle)
         initData()
     }
 
     protected fun executeInPresenter(command: P.() -> Unit) {
-        presenter?.command()
+        presenter?.apply(command)
     }
 
     abstract fun initData()
+
+    @CallSuper
+    override fun onResume() {
+        super.onResume()
+        presenter?.apply { attach(createView(), createModel()) }
+    }
 
     @CallSuper
     override fun onDestroy() {

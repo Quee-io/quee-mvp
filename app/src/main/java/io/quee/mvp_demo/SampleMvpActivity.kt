@@ -1,6 +1,8 @@
 package io.quee.mvp_demo
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import io.quee.mvp.ui.activity.QueeMvpActivity
 import io.quee.mvp_demo.databinding.ActivitySampleBinding
@@ -24,6 +26,20 @@ class SampleMvpActivity :
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d(localClassName, "onStop: ")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(localClassName, "onStart: ")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(localClassName, "onActivityResult: ")
+    }
     override fun createView(): SampleContract.SampleView {
         return SampleView(this)
     }
@@ -37,6 +53,18 @@ class SampleMvpActivity :
     }
 
     override fun afterMvpInit(bundle: Bundle?) {
+        executeInBinding {
+            samll.setOnClickListener {
+                startActivityForResult(
+                    Intent(
+                        this@SampleMvpActivity,
+                        MainActivity::class.java
+                    ),
+                    0
+                )
+            }
+
+        }
     }
 
     override fun onMessage(value: String) {
