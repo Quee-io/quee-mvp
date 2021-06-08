@@ -11,7 +11,7 @@ import io.quee.mvp_demo.sample.contract.SampleContract
  */
 
 class SampleView(
-    val messageListener: MessageListener
+    private val messageListener: MessageListener
 ) : SampleContract.SampleView {
     override fun showLoading() {
         messageListener.onMessage("start loading")

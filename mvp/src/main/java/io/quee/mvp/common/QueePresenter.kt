@@ -13,14 +13,22 @@ abstract class QueePresenter<M : QueeModel?, V : QueeView?> : ViewModel(), Lifec
     protected var view: V? = null
     protected var model: M? = null
 
-    private var viewLifecycle: Lifecycle? = null
+    private var lifecycle: Lifecycle? = null
     private var manager = RxManager()
 
 
-    open fun attach(view: V, model: M, viewLifecycle: Lifecycle? = null) {
+    open fun attach(view: V, model: M) {
+        attach(view, model, null)
+    }
+
+    open fun attach(
+        view: V,
+        model: M,
+        lifecycle: Lifecycle? = null
+    ) {
         this.view = view
         this.model = model
-        this.viewLifecycle = viewLifecycle?.apply {
+        this.lifecycle = lifecycle?.apply {
             addObserver(this@QueePresenter)
         }
         onStart()
@@ -39,13 +47,13 @@ abstract class QueePresenter<M : QueeModel?, V : QueeView?> : ViewModel(), Lifec
     override fun onCleared() {
         super.onCleared()
         manager.clear()
+        lifecycle?.removeObserver(this)
         view = null
         model = null
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun onViewDestroyed() {
-        view = null
-        viewLifecycle = null
+        detach()
     }
 }

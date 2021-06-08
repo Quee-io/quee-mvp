@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.bmuschko.nexus'
 
 archivesBaseName = 'quee-mvp'
-version = 'v1.2.7'
+version = 'v1.2.8'
 group = 'io.quee.mvp'
 
 
@@ -40,6 +40,8 @@ android {
 dependencies {
     def activity_version = '1.2.3'
     def fragment_version = '1.3.4'
+    def lifecycle_version = "2.3.1"
+
     api(fileTree(dir: 'libs', include: ['*.jar']))
     kapt "com.android.databinding:compiler:$gradle_version"
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}")
@@ -61,11 +63,13 @@ dependencies {
 
     api("androidx.activity:activity-ktx:$activity_version")
     api("androidx.fragment:fragment-ktx:$fragment_version")
-    api('android.arch.lifecycle:extensions:1.1.1')
+    implementation('androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1')
+    implementation('androidx.lifecycle:lifecycle-livedata-ktx:2.3.1')
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    api('io.quee.fragmentation:fragmentation:1.0.0.2')
-    api('io.quee.fragmentation:fragmentation-core:1.0.0.2')
-    api('io.quee.fragmentation:fragmentation-swipeback:1.0.0.2')
+
+    api('io.quee.fragmentation:fragmentation-core:v1.0.0')
+    api('io.quee.fragmentation:fragmentation-swipeback:v1.0.0')
 
 }
 extraArchive {
