@@ -40,6 +40,7 @@ class SampleMvpActivity :
         super.onActivityResult(requestCode, resultCode, data)
         Log.d(localClassName, "onActivityResult: ")
     }
+
     override fun createView(): SampleContract.SampleView {
         return SampleView(this)
     }
@@ -52,7 +53,7 @@ class SampleMvpActivity :
         return SamplePresenter()
     }
 
-    override fun afterMvpInit(bundle: Bundle?) {
+    override fun ActivitySampleBinding.afterMvpInit(bundle: Bundle?) {
         executeInBinding {
             samll.setOnClickListener {
                 startActivityForResult(

@@ -1,6 +1,5 @@
 package io.quee.mvp.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,23 +7,20 @@ import android.view.WindowManager
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import io.quee.fragmentation.swipeback.SwipeBackActivity
 import io.quee.mvp.base.QueeStructure
 import io.quee.mvp.manager.AppManager
 import io.quee.mvp.utils.LocalManager
 
-abstract class QueeActivity<B : ViewDataBinding>(
+abstract class QueeActivity<VB : ViewBinding>(
     @param:LayoutRes open val layout: Int,
-    private val isSecure: Boolean = false
-) : SwipeBackActivity(), QueeStructure {
+    private val isSecure: Boolean = false,
+) : SwipeBackActivity(), QueeStructure<VB> {
 
-    private var _binding: B? = null
+    private var _binding: VB? = null
 
-    val binding: B
-        get() = _binding!!
-
-    protected fun executeInBinding(command: B.() -> Unit) {
+    protected fun executeInBinding(command: VB.() -> Unit) {
         _binding?.command()
     }
 
@@ -37,7 +33,7 @@ abstract class QueeActivity<B : ViewDataBinding>(
             )
         }
         _binding = DataBindingUtil.setContentView(this, layout)
-        afterBindingLayout(savedInstanceState)
+        _binding?.afterBindingLayout(savedInstanceState)
         AppManager.appManager.addActivity(this)
     }
 
@@ -50,7 +46,6 @@ abstract class QueeActivity<B : ViewDataBinding>(
         LocalManager.setLocale(this)
     }
 
-    @SuppressLint("MissingSuperCall")
     @CallSuper
     override fun onDestroy() {
         _binding = null

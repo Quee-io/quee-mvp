@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.bmuschko.nexus'
 
 archivesBaseName = 'quee-mvp'
-version = 'v1.2.8'
+version = 'v1.3.0'
 group = 'io.quee.mvp'
 
 

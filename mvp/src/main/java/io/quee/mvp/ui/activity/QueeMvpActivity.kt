@@ -2,23 +2,25 @@ package io.quee.mvp.ui.activity
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import io.quee.mvp.base.MvpQueeStructure
 import io.quee.mvp.common.QueeModel
 import io.quee.mvp.common.QueePresenter
 import io.quee.mvp.common.QueeView
 
-abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M : QueeModel, V : QueeView>
+abstract class QueeMvpActivity<VB : ViewBinding, P : QueePresenter<M, V>, M : QueeModel, V : QueeView>
     (layout: Int, isSecure: Boolean = false) :
-    QueeActivity<B>(layout, isSecure), MvpQueeStructure<P, M, V> {
+    QueeActivity<VB>(layout, isSecure), MvpQueeStructure<VB, P, M, V> {
 
-    private var model: M? = null
-    private var view: V? = null
     private var presenter: P? = null
 
-    final override fun afterBindingLayout(bundle: Bundle?) {
-        presenter = this.createPresenter().apply {
-            attach(createView(), createModel(), lifecycle)
+    final override fun VB.afterBindingLayout(bundle: Bundle?) {
+        presenter = this@QueeMvpActivity.createPresenter().apply {
+            attach(
+                view = createView(),
+                model = createModel(),
+                lifecycle = lifecycle
+            )
         }
         afterMvpInit(bundle)
         initData()
@@ -28,29 +30,17 @@ abstract class QueeMvpActivity<B : ViewDataBinding, P : QueePresenter<M, V>, M :
         presenter?.command()
     }
 
-    abstract fun initData()
+    protected abstract fun initData()
 
     @CallSuper
     override fun onResume() {
         super.onResume()
-        presenter?.apply { attach(createView(), createModel()) }
-    }
-
-    @CallSuper
-    override fun onDestroy() {
-        presenter?.detach()
-        super.onDestroy()
-    }
-
-    @CallSuper
-    override fun onPause() {
-        super.onPause()
-        presenter?.detach()
-    }
-
-    @CallSuper
-    override fun onStop() {
-        super.onStop()
-        presenter?.detach()
+        presenter?.apply {
+            attach(
+                view = createView(),
+                model = createModel(),
+                lifecycle = lifecycle
+            )
+        }
     }
 }

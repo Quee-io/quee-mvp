@@ -22,3 +22,15 @@ class RxManager {
         }
     }
 }
+
+fun <T> RxManager.add(
+    observable: Observable<T>,
+    success: T.() -> Unit,
+    error: Throwable.() -> Unit = {},
+) {
+    add(observable.subscribe({
+        it.success()
+    }, {
+        it.error()
+    }))
+}
