@@ -3,6 +3,7 @@ package io.quee.mvp_demo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.lifecycle.lifecycleScope
 import io.quee.mvp.ui.activity.QueeMvpActivity
 import io.quee.mvp_demo.databinding.ActivitySampleBinding
@@ -15,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class SampleMvpActivity :
     QueeMvpActivity<ActivitySampleBinding, SampleContract.SamplePresenter, SampleContract.SampleModel, SampleContract.SampleView>(
-        R.layout.activity_sample
     ), MessageListener {
 
     override fun initData() {
@@ -73,4 +73,7 @@ class SampleMvpActivity :
             textView.text = "${textView.text} \n\n $value"
         }
     }
+
+    override fun inflate(layoutInflater: LayoutInflater) =
+        ActivitySampleBinding.inflate(layoutInflater)
 }

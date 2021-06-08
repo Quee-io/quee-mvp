@@ -3,22 +3,22 @@ package io.quee.mvp.ui.activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import io.quee.fragmentation.swipeback.SwipeBackActivity
 import io.quee.mvp.base.QueeStructure
 import io.quee.mvp.manager.AppManager
 import io.quee.mvp.utils.LocalManager
 
 abstract class QueeActivity<VB : ViewBinding>(
-    @param:LayoutRes open val layout: Int,
     private val isSecure: Boolean = false,
-) : SwipeBackActivity(), QueeStructure<VB> {
+) : AppCompatActivity(), QueeStructure<VB> {
 
     private var _binding: VB? = null
+
+    protected abstract fun inflate(layoutInflater: LayoutInflater): VB
 
     protected fun executeInBinding(command: VB.() -> Unit) {
         _binding?.command()
@@ -32,8 +32,11 @@ abstract class QueeActivity<VB : ViewBinding>(
                 WindowManager.LayoutParams.FLAG_SECURE
             )
         }
-        _binding = DataBindingUtil.setContentView(this, layout)
-        _binding?.afterBindingLayout(savedInstanceState)
+        inflate(layoutInflater).apply {
+            _binding = this
+            setContentView(root)
+            afterBindingLayout(savedInstanceState)
+        }
         AppManager.appManager.addActivity(this)
     }
 

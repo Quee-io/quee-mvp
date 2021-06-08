@@ -7,18 +7,22 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import io.quee.fragmentation.CoreFragment
 import io.quee.mvp.base.QueeStructure
 
 abstract class QueeFragment<VB : ViewBinding>(
     @param:LayoutRes open val layout: Int,
     private val isSecure: Boolean = false,
-) : CoreFragment(),
+) : Fragment(),
     QueeStructure<VB> {
 
     private var _binding: VB? = null
+
+    protected abstract fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): VB
 
     protected fun executeInBinding(command: VB.() -> Unit) {
         _binding?.command()
@@ -35,9 +39,10 @@ abstract class QueeFragment<VB : ViewBinding>(
                 WindowManager.LayoutParams.FLAG_SECURE
             )
         }
-        val dataBinding: VB = DataBindingUtil.inflate(inflater, layout, container, false)
-        _binding = dataBinding
-        return dataBinding.root
+        return inflateBinding(inflater, container).run {
+            _binding = this
+            root
+        }
     }
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

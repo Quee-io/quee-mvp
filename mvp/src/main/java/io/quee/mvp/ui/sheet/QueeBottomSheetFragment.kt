@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.quee.mvp.base.QueeStructure
@@ -17,6 +16,11 @@ abstract class QueeBottomSheetFragment<VB : ViewBinding>(@param:LayoutRes open v
 
     private var _binding: VB? = null
 
+    protected abstract fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): VB
+
     protected fun executeInBinding(command: VB.() -> Unit) {
         _binding?.command()
     }
@@ -26,9 +30,10 @@ abstract class QueeBottomSheetFragment<VB : ViewBinding>(@param:LayoutRes open v
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val dataBinding: VB = DataBindingUtil.inflate(inflater, layout, container, false)
-        _binding = dataBinding
-        return dataBinding.root
+        return inflateBinding(inflater, container).run {
+            _binding = this
+            root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

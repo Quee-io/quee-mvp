@@ -8,9 +8,9 @@ import io.quee.mvp.common.QueeModel
 import io.quee.mvp.common.QueePresenter
 import io.quee.mvp.common.QueeView
 
-abstract class QueeMvpActivity<VB : ViewBinding, P : QueePresenter<M, V>, M : QueeModel, V : QueeView>
-    (layout: Int, isSecure: Boolean = false) :
-    QueeActivity<VB>(layout, isSecure), MvpQueeStructure<VB, P, M, V> {
+abstract class QueeMvpActivity<VB : ViewBinding, P : QueePresenter<M, V>, M : QueeModel, V : QueeView>(
+    isSecure: Boolean = false,
+) : QueeActivity<VB>(isSecure), MvpQueeStructure<VB, P, M, V> {
 
     private var presenter: P? = null
 
