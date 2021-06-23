@@ -1,2 +1,3 @@
-include ':app', ':mvp'
+include ':app', ':library:mvp'
 rootProject.name='mvp-architecture'
+include ':library:mvp-scene'

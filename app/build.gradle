@@ -8,7 +8,7 @@ android {
     buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "io.quee.mvp_demo"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         multiDexEnabled true
         versionCode 1
@@ -28,6 +28,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -38,5 +41,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.scottyab:secure-preferences-lib:0.1.7'
 
-    implementation project(path: ':mvp')
+    implementation project(path: ':library:mvp')
+    implementation project(path: ':library:mvp-scene')
 }

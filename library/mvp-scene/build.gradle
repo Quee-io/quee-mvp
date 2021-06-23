@@ -1,0 +1,88 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'com.bmuschko.nexus'
+}
+
+archivesBaseName = 'quee-mvp-scene'
+version = "$library_version"
+group = 'io.quee.mvp'
+
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    api(project(path: ':library:mvp'))
+    api('com.bytedance.scene:scene:1.1.0')
+    api('com.bytedance.scene:scene-ui:1.1.0')
+    api('com.bytedance.scene:scene-shared-element-animation:1.1.0')
+    api('com.bytedance.scene:scene-ktx:1.1.0')
+}
+
+extraArchive {
+    sources = true
+    javadoc = true
+}
+
+modifyPom {
+    project {
+        name 'quee-mvp-scene'
+        description 'Quee MVP Archeticture Extension to support bytedance scene.'
+        url 'https://github.com/Quee-io/quee-mvp'
+        inceptionYear '2020'
+
+        scm {
+            url 'https://github.com/Quee-io/quee-mvp'
+            connection 'scm:https://github.com/Quee-io/quee-mvp.git'
+            developerConnection 'scm:git://github.com/Quee-io/quee-mvp.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'iloom'
+                name 'Ibrahim AlTamimi'
+                email 'ibm.iloom@gmail.com'
+            }
+        }
+    }
+}
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}

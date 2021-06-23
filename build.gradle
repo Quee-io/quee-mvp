@@ -3,6 +3,7 @@
 buildscript {
     ext.kotlin_version = '1.5.10'
     ext.gradle_version = '4.2.1'
+    ext.library_version = 'v1.4.0'
 
     repositories {
         google()
@@ -28,38 +29,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-ext {
-    // Sdk and tools
-    appVersionCode = 1
-    appVersionName = '1.0.0'
-    minSdkVersion = 17
-    targetSdkVersion = 29
-    compileSdkVersion = 29
-    buildToolsVersion = '29.0.1'
-
-    supportLibraryVersion = '28.0.0'
-
-    // App dependencies
-    guavaVersion = '18.0'
-    junitVersion = '4.12'
-    mockitoVersion = '1.10.19'
-    powerMockito = '1.6.2'
-    hamcrestVersion = '1.3'
-    runnerVersion = '0.4.1'
-    rulesVersion = '0.4.1'
-    espressoVersion = '2.2.1'
-    retrofitVersion = '2.9.0'
-    okhttploggingVersion = '4.9.1'
-    okhttpVersion = '4.9.1'
-
-    rxjavaVersion = '3.0.6'
-    rxandroidVersion = '2.1.1'
-    rxkotlinVersion = '2.4.0'
-    rxbindingVersion = '2.2.0'
-
-    glideVersion = '4.11.0'
-    glideokhttpVersion = '4.11.0'
-    photoviewVersion = '1.2.4'
 }
